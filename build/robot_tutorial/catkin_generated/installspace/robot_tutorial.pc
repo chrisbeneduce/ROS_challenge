@@ -1,0 +1,8 @@
+prefix=/home/christian/catkin_ws/install
+
+Name: robot_tutorial
+Description: Description of robot_tutorial
+Version: 0.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: geometry_msgs roscpp rospy std_msgs message_runtime

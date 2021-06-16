@@ -1,0 +1,10 @@
+(cl:defpackage robot_tutorial-srv
+  (:use )
+  (:export
+   "MANUALCOMMANDS"
+   "<MANUALCOMMANDS-REQUEST>"
+   "MANUALCOMMANDS-REQUEST"
+   "<MANUALCOMMANDS-RESPONSE>"
+   "MANUALCOMMANDS-RESPONSE"
+  ))
+

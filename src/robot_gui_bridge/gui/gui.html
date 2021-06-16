@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <script type="text/javascript" src="http://static.robotwebtools.org/roslibjs/current/roslib.min.js"></script> 
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/nipplejs/0.7.3/nipplejs.js"></script>
+
+  <script type="text/javascript" type="text/javascript">
+/*
+ * Copyright (C) 2021, Christian Santos Beneduce, EKUMEN's CHALLENGE
+ *
+ *                    HOLONOMIC ROBOT EXECUTABLE
+ *
+ *  			    web interface
+ *
+ */
+
+
+/*
+ * start the script by importing minified version of roslib from Robot Web Tools
+ */
+   var ros = new ROSLIB.Ros({
+      url: 'ws://localhost:9090'
+    });
+
+/*
+ * These snippets creates listeners for Ros event (in this case the connection event). 
+ *  When the event is raised we find an * * html element with “status” id 
+ * (in this case a span element that we defined in the body) and we change it’s inner html 
+ * to the  *message we want to display.
+ */
+    ros.on('connection', function () {
+      document.getElementById("status").innerHTML = "Connected";
+    });
+    ros.on('error', function (error) {
+      document.getElementById("status").innerHTML = "Error";
+    });
+    ros.on('close', function () {
+      document.getElementById("status").innerHTML = "Closed";
+    });
+
+
+/*
+ * Here I create a listener to the /feedback topic in order to catch the coordinates 
+ * it uses a "geometry_msgs/Pose2D" message
+ */
+
+    var feedback_listener = new ROSLIB.Topic({
+      ros: ros,
+      name: '/feedback',
+      messageType: 'geometry_msgs/Pose2D'
+    });
+
+    feedback_listener.subscribe(function (m) {
+      document.getElementById("msg_x").innerHTML = m.x;
+      document.getElementById("msg_y").innerHTML = m.y;
+      document.getElementById("msg_theta").innerHTML = m.theta;
+    });
+
+
+/*
+ * Here I create another listener to the turtle's /pose topic in order to catch also the coordinates 
+ * and velocity (anular & linear)
+ * it uses a "turtlesim/Pose" message
+ */
+    var pos_listener = new ROSLIB.Topic({
+      ros: ros,
+      name: 'turtle1/pose',
+      messageType: 'turtlesim/Pose'
+    });
+
+    pos_listener.subscribe(function (m) {
+      document.getElementById("pose_x").innerHTML = m.x;
+      document.getElementById("pose_y").innerHTML = m.y;
+      document.getElementById("pose_theta").innerHTML = m.theta;
+      document.getElementById("linear_velocity").innerHTML = m.linear_velocity;
+      document.getElementById("angular_velocity").innerHTML = m.angular_velocity;
+    });
+
+
+
+/*
+ * pointer to turtle's /cmd_vel topic in order to move the robot with the "joystick"
+ * it uses a "geometry_msgs/Twist" message
+ */
+
+
+    cmd_vel_listener = new ROSLIB.Topic({
+      ros: ros,
+      name: "turtle1/cmd_vel",
+      messageType: 'geometry_msgs/Twist'
+    });
+
+    move = function (linear, angular) {
+      var twist = new ROSLIB.Message({
+        linear: {
+          x: linear,
+          y: 0,
+          z: 0
+        },
+        angular: {
+          x: 0,
+          y: 0,
+          z: angular
+        }
+      });
+      cmd_vel_listener.publish(twist);
+    }
+
+
+/*
+ * I use a very funcy "joystick" script to move the turtle
+ */
+
+    createJoystick = function () {
+      var options = {
+        zone: document.getElementById('zone_joystick'),
+        threshold: 0.1,
+        position: { left: 50 + '%' },
+        mode: 'static',
+        size: 150,
+        color: '#000000',
+      };
+      manager = nipplejs.create(options);
+
+      linear_speed = 0;
+      angular_speed = 0;
+
+      manager.on('start', function (event, nipple) {
+        timer = setInterval(function () {
+          move(linear_speed, angular_speed);
+        }, 25);
+      });
+
+      manager.on('move', function (event, nipple) {
+        max_linear = 5.0; // m/s
+        max_angular = 2.0; // rad/s
+        max_distance = 75.0; // pixels;
+        linear_speed = Math.sin(nipple.angle.radian) * max_linear * nipple.distance/max_distance;
+				angular_speed = -Math.cos(nipple.angle.radian) * max_angular * nipple.distance/max_distance;
+      });
+
+      manager.on('end', function () {
+        if (timer) {
+          clearInterval(timer);
+        }
+        self.move(0, 0);
+      });
+    }
+    window.onload = function () {
+      createJoystick();
+    }
+
+  </script>
+</head>
+
+
+
+
+<body>
+  <img src="https://www.ekumenlabs.com/images/logo.png" alt="Ekumen" width="102" height="32">
+  <h1>Simple ROS User Interface</h1>
+  <hr />
+  <p>Connection status: <b><span id="status"></span></b></p>
+  <hr />
+  <p>pose of the robot from <mark><b>/feedback</b></mark> topic</p>
+  <p><b>X:     </b><span id="msg_x"></span></p>
+  <p><b>Y:     </b><span id="msg_y"></span></p>
+  <p><b>THETA: </b><span id="msg_theta"></span></p>
+  <hr />
+  <p>pose of the robot from <mark><b>/pose</b></mark> topic</p>
+  <p><b>X:     </b><span id="pose_x"></span></p>
+  <p><b>Y:     </b><span id="pose_y"></span></p>
+  <p><b>THETA: </b><span id="pose_theta"></span></p>
+  <hr />
+  <p>turtle speed of the robot from <mark><b>/pose</b></mark> topic </p>
+  <p><b>LINEAR: </b><span id="linear_velocity"></span></p>
+  <p><b>ANGULAR:</b><span id="angular_velocity"></span></p>
+  <hr />
+
+  <div id="zone_joystick" style="position: relative;"></div>
+</body>
+
+</html>

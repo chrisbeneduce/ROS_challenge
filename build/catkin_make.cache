@@ -1,0 +1,2 @@
+holonomic_robot:rqt_mypkg
+-DCATKIN_DEVEL_PREFIX=/home/christian/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/christian/catkin_ws/install -G Unix Makefiles
