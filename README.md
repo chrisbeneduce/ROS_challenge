@@ -1,6 +1,5 @@
 
-[![N|Solid](https://www.ekumenlabs.com/images/logo.png)](https://www.ekumenlabs.com/)
-# Technical challenge 🚀
+#  🚀
 ## _USING ROS FOR HOLONOMIC MOBILE ROBOTS_ 
 
 
@@ -159,7 +158,7 @@ Open the UI in the browser of your choice, the detailed explanation of how it wo
 ## Technical documentation about the project 📋
 
 
-[follow this link](https://github.com/ekumenlabs/tech_cbeneduce/blob/main/src/readme.md)
+[follow this link](https://github.com/chrisbeneduce/ROS_challenge/blob/main/src/readme.md)
 
 ---
 
@@ -175,16 +174,6 @@ Open the UI in the browser of your choice, the detailed explanation of how it wo
 
 
 
-## Author ✒️
-
-
-* **Chris Beneduce** -  [chrisbeneduce](https://github.com/chrisbeneduce)
-
-
-
-## Thanks 🎁
-
-* Juan, Alejo and Fernando from Ekumen 🤓.
 
 
 ---
