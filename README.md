@@ -158,7 +158,7 @@ Open the UI in the browser of your choice, the detailed explanation of how it wo
 ## Technical documentation about the project 📋
 
 
-[follow this link](https://github.com/chrisbeneduce/ROS_challenge/src/readme.md)
+[follow this link](https://github.com/chrisbeneduce/ROS_challenge/blob/master/readme.md)
 
 ---
 
