@@ -150,7 +150,7 @@ I've added a simple web-based UI that uses [roslibjs](http://wiki.ros.org/roslib
 ```sh
 cat ~/catkin_ws/src/robot_gui_bridge/gui/gui.html
 ```
-Open the UI in the browser of your choice, the detailed explanation of how it works inside is [here](https://github.com/ekumenlabs/tech_cbeneduce/blob/main/src/readme.md) then come back to **point 2** and start turtlesim, robot, and the Python UI.
+Open the UI in the browser of your choice, the detailed explanation of how it works inside is [here](https://github.com/chrisbeneduce/ROS_challenge/tree/master/src/readme.md) then come back to **point 2** and start turtlesim, robot, and the Python UI.
 
 
 
