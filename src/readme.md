@@ -1,5 +1,4 @@
 
-[![N|Solid](https://www.ekumenlabs.com/images/logo.png)](https://www.ekumenlabs.com/)
 # Technical documentation
 
 # 1-Technical briefing about "robot.cpp" 📋
@@ -121,16 +120,7 @@ The behavior is very simple:
 * [Code::Blocks](https://www.codeblocks.org/) - Programming IDE 
 
 
-## Author ✒️
 
-
-* **Chris Beneduce** -  [chrisbeneduce](https://github.com/chrisbeneduce)
-
-
-
-## Thanks 🎁
-
-* Juan, Alejo and Fernando from Ekumen 🤓.
 
 
 ---
